@@ -1,0 +1,25 @@
+---------------------------------------------------Python-----------------------------------------------
+indentation
+comments
+types of languages - formal & natural
+errors - sytanx, runtime, semantic
+debugging
+variables
+data types - int, float, bool, list, dict, tuples, sets, str
+list - append, pop
+operators - %, / , //, +, -, *, **
+iteration - loops - for and while - break, 
+conditional statements - if, elif, else
+functions - scope, arguments, paraments, return values
+class 
+
+# Assignment
+> Write a program for a video game renting service.
+> Scope / Functionality:
+    - display available games
+    - maintain record of who has what games, till when
+    - rent game to a person
+    - return a rented game
+
+--> 
+
