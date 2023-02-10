@@ -1,0 +1,12 @@
+Python
+---
+Command Line Apps - Typer
+Full Stack Web Apps - Django, Flask
+Backend APIs - FastAPI, Django/Django Rest Framework
+Frontend - Flet
+Testing - pytest, locust
+IoT- micro-python
+--
+ML Libraries / Frameworks: 
+Tensorflow, pandas, numpy, pytorch
+
