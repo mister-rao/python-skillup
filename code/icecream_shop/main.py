@@ -1,4 +1,4 @@
-from shop import IceCreamShop
+from uushop import IceCreamShop
 
 # list of available flavours
 # cost of each flavour
