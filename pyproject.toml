@@ -1,0 +1,16 @@
+[tool.poetry]
+name = "shopyoo"
+version = "0.1.0"
+description = "shopyoo is a cli app to shop anything you want."
+authors = ["Ganesh Prasad <mister.xrao@gmail.com>"]
+readme = "README.md"
+
+[tool.poetry.dependencies]
+python = "^3.11"
+typer = {extras = ["all"], version = "^0.9.0"}
+peewee = "^3.16.2"
+
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
