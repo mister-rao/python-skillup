@@ -60,6 +60,10 @@ class Authentication:
         except pwee.DoesNotExist as e:
             raise ShopYooExit("Check username and password") from e
 
+    def load_session(self):
+        if self.session.current_user is not None:
+            self.user = User.get(username=self.session.current_user)
+
     def logout(self):
         with self.session:
             print(

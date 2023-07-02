@@ -4,6 +4,7 @@ Models represent tables in the database and the relationship b/w them.
 """
 
 from peewee import *
+from shop.exceptions import ShopYooExit
 
 
 # database connection
@@ -19,27 +20,53 @@ class User(Model):
 
 
 class Inventory(Model):
-    name = CharField()
-    description = CharField()
+    name = CharField(unique=True)
     price = IntegerField()
+    quantity = IntegerField()
+
+    class Meta:
+        database = db
+
+    def __str__(self) -> str:
+        return f"{self.id} {self.name} {self.price} {self.quantity}"
+
+    def update_stock(self, price: int, quantity: int):
+        self.update_price(price)
+        self.update_quantity(quantity)
+        self.save()
+        print(f"{self.name} restocked!")
+
+    def update_price(self, price: int):
+        if self.price != price:
+            self.price = price
+            print(f"{self.name} price updated!")
+
+    def update_quantity(self, quantity: int):
+        self.quantity += quantity
+        print(f"{self.name} quantity updated!")
+
+
+class Cart(Model):
+    user = ForeignKeyField(User)
+    item = ForeignKeyField(Inventory)
+    quantity = IntegerField()
 
     class Meta:
         database = db
 
 
-class Cart(Model):
-    user = ForeignKeyField(User)
-    items = ManyToManyField(Inventory)
-
-
 class Order(Model):
     user = ForeignKeyField(User)
-    items = ManyToManyField(Inventory)
+    item = ForeignKeyField(Inventory)
+    quantity = IntegerField()
     amount = FloatField()
     payment_mode = CharField()
+
+    class Meta:
+        database = db
 
 
 def create_tables():
     # create tables
     with db:
-        db.create_tables([User, Inventory])
+        db.create_tables([User, Inventory, Cart, Order])
