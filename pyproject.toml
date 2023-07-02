@@ -1,8 +1,8 @@
 [tool.poetry]
 name = "shopyoo"
 version = "0.1.0"
-description = "shopyoo is a cli app to shop anything you want."
-authors = ["Ganesh Prasad <mister.xrao@gmail.com>"]
+description = "The CLI shopping app."
+authors = ["Ganesh Prasad Rao <gprao@arkverse.in>"]
 readme = "README.md"
 
 [tool.poetry.dependencies]
