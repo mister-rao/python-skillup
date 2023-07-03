@@ -1,16 +1,16 @@
 import typer
 from typing_extensions import Annotated
-from shop.services.authentication import UserSession, Authentication
+from shop.services.authentication import UserSession, AuthenticationService
 
 app = typer.Typer()
 
 user_session = UserSession()
-auth = Authentication(user_session)
+auth = AuthenticationService(user_session)
 
 
 @app.command()
 def signup(
-    username: str,
+    username: Annotated[str, typer.Option(prompt=True)],
     password: Annotated[
         str, typer.Option(prompt=True, confirmation_prompt=True, hide_input=True)
     ],
@@ -20,7 +20,7 @@ def signup(
 
 @app.command()
 def login(
-    username: str,
+    username: Annotated[str, typer.Option(prompt=True)],
     password: Annotated[str, typer.Option(prompt=True, hide_input=True)],
 ):
     auth.login(username=username, password=password)

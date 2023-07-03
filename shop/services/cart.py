@@ -6,16 +6,27 @@ from rich.table import Table
 console = Console()
 
 
-class UserCart:
+class CartService:
     def add_item(self, user, name: str, quantity: int):
-        item = Inventory.get(name=name)
-        if item.quantity < quantity:
-            raise ShopYooExit(f"Only {item.quantity} {name} available.")
-        cart_item, _ = Cart.get_or_create(item=item, user=user)
+        Inventory.availability(name, quantity)
+        cart_item: Cart = self.get_cart_item(user=user, name=name)
         cart_item.add(quantity=quantity)
+
+    def remove_item(self, user, name: str, quantity: int):
+        cart_item: Cart = self.get_cart_item(user=user, name=name)
+        cart_item.remove(quantity=quantity)
 
     def total_price(self):
         pass
+
+    @staticmethod
+    def get_cart_item(user, name: str) -> Cart:
+        item = Inventory.get(name=name)
+        try:
+            cart_item = Cart.get(item=item, user=user)
+        except Cart.DoesNotExist:
+            cart_item = Cart.create(item=item, user=user, quantity=0)
+        return cart_item
 
     def display(self, user):
         cart = Cart.filter(user=user)
@@ -29,3 +40,8 @@ class UserCart:
                 f"Rs. {ci.quantity * ci.item.price}",
             )
         console.print(table)
+
+    def clear(self, user):
+        cart_items = Cart.filter(user=user)
+        query = Cart.delete().where(Cart.id.in_(cart_items))
+        query.execute()

@@ -6,7 +6,7 @@ from rich.table import Table
 console = Console()
 
 
-class ShopInventory:
+class InventoryService:
     def restock(self, name: str, price: str, quantity: int):
         try:
             stock = Inventory.create(name=name, price=price, quantity=quantity)

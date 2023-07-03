@@ -34,7 +34,7 @@ class UserSession:
         self.current_user = user
 
 
-class Authentication:
+class AuthenticationService:
     user = None
 
     def __init__(self, session: UserSession) -> None:
