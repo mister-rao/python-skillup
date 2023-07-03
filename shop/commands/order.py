@@ -12,9 +12,11 @@ auth = users.auth
 
 @app.command()
 def place():
+    auth.is_authenticated()
     order.place(auth.user)
 
 
 @app.command()
 def display():
+    auth.is_authenticated()
     order.display(auth.user)

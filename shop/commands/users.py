@@ -27,10 +27,17 @@ def login(
 
 
 @app.command()
-def user():
-    auth.check_session()
+def profile():
+    auth.is_authenticated()
+    auth.print_current_user()
+
+
+@app.command()
+def list():
+    auth.list_users()
 
 
 @app.command()
 def logout():
+    auth.is_authenticated()
     auth.logout()

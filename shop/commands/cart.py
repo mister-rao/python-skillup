@@ -14,6 +14,7 @@ def add(
     name: Annotated[str, typer.Option(prompt=True)],
     quantity: Annotated[int, typer.Option(prompt=True)],
 ):
+    auth.is_authenticated()
     cart.add_item(auth.user, name, quantity)
     display()
 
@@ -23,16 +24,19 @@ def remove(
     name: Annotated[str, typer.Option(prompt=True)],
     quantity: Annotated[int, typer.Option(prompt=True)],
 ):
+    auth.is_authenticated()
     cart.remove_item(auth.user, name, quantity)
     display()
 
 
 @app.command()
 def clear():
+    auth.is_authenticated()
     cart.clear(auth.user)
     display()
 
 
 @app.command()
 def display():
+    auth.is_authenticated()
     cart.display(auth.user)

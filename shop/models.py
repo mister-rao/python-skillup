@@ -65,7 +65,7 @@ class Cart(Model):
         self.save()
 
     def remove(self, quantity: int):
-        self.quantity = self.quantity + quantity
+        self.quantity = self.quantity - quantity
         self.save()
         if self.quantity == 0:
             self.delete_instance()

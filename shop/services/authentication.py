@@ -40,9 +40,16 @@ class AuthenticationService:
     def __init__(self, session: UserSession) -> None:
         self.session = session
 
-    def check_session(self):
+    def list_users(self):
+        users = User.select()
+        for i, u in enumerate(users):
+            print(f"{i+1}. {u.username}")
+
+    def is_authenticated(self):
         if self.session.current_user is None:
             raise ShopYooExit("User is not logged in.")
+
+    def print_current_user(self):
         print(self.session.current_user)
 
     def signup(self, username: str, password: str):
