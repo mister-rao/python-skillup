@@ -54,6 +54,9 @@ class Cart(Model):
     class Meta:
         database = db
 
+    def add(self, quantity: int):
+        self.quantity += quantity
+
 
 class Order(Model):
     user = ForeignKeyField(User)
