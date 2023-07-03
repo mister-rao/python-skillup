@@ -3,6 +3,7 @@ This file contains database models for the shopyoo app.
 Models represent tables in the database and the relationship b/w them.
 """
 
+from email.policy import default
 from peewee import *
 from shop.exceptions import ShopYooExit
 
@@ -35,6 +36,19 @@ class Inventory(Model):
         item = Inventory.get(name=name)
         if item.quantity < quantity:
             raise ShopYooExit(f"Only {item.quantity} {name} available.")
+        return item
+
+    @staticmethod
+    def pick_item(name: str, quantity: int):
+        item = Inventory.availability(name, quantity)
+        item.quantity = item.quantity - quantity
+        item.save()
+
+    @staticmethod
+    def drop_item(name: str, quantity: int):
+        item = Inventory.get(name=name)
+        item.quantity = item.quantity + quantity
+        item.save()
 
     def update_stock(self, price: int, quantity: int):
         self.update_price(price)
@@ -77,6 +91,7 @@ class Order(Model):
     quantity = IntegerField()
     amount = FloatField()
     payment_mode = CharField()
+    status = CharField(default="pending")
 
     class Meta:
         database = db

@@ -8,16 +8,14 @@ console = Console()
 
 class CartService:
     def add_item(self, user, name: str, quantity: int):
-        Inventory.availability(name, quantity)
         cart_item: Cart = self.get_cart_item(user=user, name=name)
+        Inventory.pick_item(name, quantity)
         cart_item.add(quantity=quantity)
 
     def remove_item(self, user, name: str, quantity: int):
         cart_item: Cart = self.get_cart_item(user=user, name=name)
         cart_item.remove(quantity=quantity)
-
-    def total_price(self):
-        pass
+        Inventory.drop_item(name, quantity)
 
     @staticmethod
     def get_cart_item(user, name: str) -> Cart:
@@ -30,6 +28,12 @@ class CartService:
 
     def display(self, user):
         cart = Cart.filter(user=user)
+        count = cart.count()
+
+        if count == 0:
+            print("Your cart looks empty, add some items!")
+            return
+
         table = Table("sl.No.", "Item", "Quantity", "Price", "Amount")
         for i, ci in enumerate(cart):
             table.add_row(
@@ -40,6 +44,14 @@ class CartService:
                 f"Rs. {ci.quantity * ci.item.price}",
             )
         console.print(table)
+        total_price = self.total_price(cart)
+        print(f"Total items: {count} | price: Rs. {total_price}")
+
+    def total_price(self, cart):
+        price = 0
+        for i in cart:
+            price = price + (i.quantity * i.item.price)
+        return price
 
     def clear(self, user):
         cart_items = Cart.filter(user=user)

@@ -32,8 +32,10 @@ def remove(
 @app.command()
 def clear():
     auth.is_authenticated()
-    cart.clear(auth.user)
-    display()
+    print("This will remove all items from your cart.")
+    if confirm := typer.confirm("Are you sure ?", default=False):
+        cart.clear(auth.user)
+        print("Cart emptied")
 
 
 @app.command()

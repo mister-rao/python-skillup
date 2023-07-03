@@ -20,3 +20,15 @@ def place():
 def display():
     auth.is_authenticated()
     order.display(auth.user)
+
+
+@app.command()
+def history():
+    auth.is_authenticated()
+    order.history(auth.user)
+
+
+@app.command()
+def checkout(amout: int):
+    auth.is_authenticated()
+    order.checkout(auth.user, amout)

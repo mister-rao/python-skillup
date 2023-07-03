@@ -49,13 +49,9 @@ class AuthenticationService:
         if self.session.current_user is None:
             raise ShopYooExit("User is not logged in.")
 
-    def print_current_user(self):
-        print(self.session.current_user)
-
     def signup(self, username: str, password: str):
         try:
             user = User.create(username=username, password=password)
-            print(user.username)
         except pwee.IntegrityError as e:
             raise ShopYooExit(f"User '{username}' already exists.") from e
 
@@ -63,7 +59,6 @@ class AuthenticationService:
         try:
             user = User.get(username=username, password=password)
             self.session.set_current_user(user.username)
-            print(user.username)
         except pwee.DoesNotExist as e:
             raise ShopYooExit("Check username and password") from e
 
@@ -74,5 +69,5 @@ class AuthenticationService:
     def logout(self):
         with self.session:
             print(
-                f"Thank you for shopping, {self.session.current_user} See you next time, bye."
+                f"Thank you for shopping, {self.session.current_user}! See you soon, bye."
             )
